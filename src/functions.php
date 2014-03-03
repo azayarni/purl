@@ -114,6 +114,7 @@ function curl_exec(\Purl $ch) {
 //////////////// NOT SUPPORTED FUNCTIONS //////////////////////////////////////
 
 function curl_getinfo(\Purl $ch, $opt = 0) {
+	if ($opt==CURLINFO_HTTP_CODE) { return $ch->getResponseNumber(); }
     trigger_error(__FUNCTION__ . PURL_NOT_SUPPORTED_MSG, PURL_ERROR_TYPE);
 }
 

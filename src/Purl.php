@@ -54,6 +54,13 @@ class Purl
     private $_errorno = '';
     
     /**
+     * Last response code
+     * 
+     * @var type 
+     */
+    private $_responseno = null;
+    
+    /**
      * URL to call
      * 
      * @var string 
@@ -118,6 +125,16 @@ class Purl
         }
         
         return true;
+    }
+    
+    /**
+     * Get last response number
+     * 
+     * @return int
+     */
+    public function getResponseNumber()
+    {
+        return $this->_responseno;
     }
     
     /**
@@ -266,6 +283,8 @@ class Purl
             $this->_result = implode($http_response_header, "\r\n") . "\r\n\r\n" . $this->_result;
         }
                         
+        $this->_responseno=explode(' ',$http_response_header[0])[1];
+        
         return isset($this->_options[CURLOPT_RETURNTRANSFER]) ? $this->_result : true;
     }
     
