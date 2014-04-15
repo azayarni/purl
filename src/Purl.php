@@ -49,7 +49,7 @@ class Purl
     /**
      * Last error number
      * 
-     * @var type 
+     * @var number
      */
     private $_errorno = '';
     
@@ -80,6 +80,18 @@ class Purl
      * @var string
      */
     private $_agent = 'pUrl PHP Client V 0.1';
+    
+    /**
+     * Info container
+     * 
+     * @var array
+     */
+    private $_info = array();
+    
+    private static $_infoMap = array(
+        CURLINFO_HTTP_CODE => 'http_code',
+        CURLINFO_HEADER_OUT => 'request_header'
+    );
     
     /**
      * Setter for curl options
@@ -148,7 +160,17 @@ class Purl
      */
     public function getInfo($opt = 0)
     {        
-        return array();
+        if ($opt === 0) {
+            
+            return $this->_info;
+            
+        } 
+        
+        if (isset(self::$_infoMap[$opt])) {
+            return $this->_info[self::$_infoMap[$opt]];
+        }
+        
+        trigger_error(__FUNCTION__ . PURL_NOT_SUPPORTED_MSG, PURL_ERROR_TYPE);
     }
     
     /**
@@ -190,9 +212,9 @@ class Purl
             }
         }
         
-        $headers .= "Content-type: " . "application/x-www-form-urlencoded"."\r\n";
+        if (!isset($this->_headers['Content-type'])) $headers .= "Content-type: " . "application/x-www-form-urlencoded"."\r\n";
         
-        return $this->_call($query, $headers);
+        return $this->_call($query, $this->_info['request_header'] = $headers);
     }
     
     /**
@@ -247,13 +269,15 @@ class Purl
         $reporting = error_reporting(0);
         
         if (!empty($this->_options[CURLOPT_NOBODY])) {
-            echo $handler = fopen($this->_url, 'r', false, $context);
+            $handler = fopen($this->_url, 'r', false, $context);
         } else {
             $this->_result = file_get_contents($this->_url, false, $context);
         }
+        
+        $this->_info['http_code'] = explode(' ', $http_response_header[0])[1];
                 
         error_reporting($reporting);
-        
+                
         // on failure
         if ($this->_result === false || (isset($handler) && $handler === false)) {
             
@@ -261,7 +285,7 @@ class Purl
 
             return false;
         }
-        
+
         if (!empty($this->_options[CURLOPT_HEADER])) {
             $this->_result = implode($http_response_header, "\r\n") . "\r\n\r\n" . $this->_result;
         }

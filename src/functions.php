@@ -111,11 +111,47 @@ function curl_exec(\Purl $ch) {
     return $ch->execute();
 }
 
-//////////////// NOT SUPPORTED FUNCTIONS //////////////////////////////////////
-
+/**
+ * NOT YET FULLY SUPPORTED!!
+ * (PHP 4 &gt;= 4.0.4, PHP 5)<br/>
+ * Get information regarding a specific transfer
+ * @link http://php.net/manual/en/function.curl-getinfo.php
+ * @param resource $ch
+ * @param int $opt [optional] <p>
+ * This may be one of the following constants:
+ * <b>CURLINFO_EFFECTIVE_URL</b> - Last effective URL
+ * @return mixed If <i>opt</i> is given, returns its value as a string.
+ * Otherwise, returns an associative array with the following elements
+ * (which correspond to <i>opt</i>), or <b>FALSE</b> on failure:
+ * "url"
+ * "content_type"
+ * "http_code"
+ * "header_size"
+ * "request_size"
+ * "filetime"
+ * "ssl_verify_result"
+ * "redirect_count"
+ * "total_time"
+ * "namelookup_time"
+ * "connect_time"
+ * "pretransfer_time"
+ * "size_upload"
+ * "size_download"
+ * "speed_download"
+ * "speed_upload"
+ * "download_content_length"
+ * "upload_content_length"
+ * "starttransfer_time"
+ * "redirect_time"
+ * "certinfo"
+ * "request_header" (This is only set if the <b>CURLINFO_HEADER_OUT</b>
+ * is set by a previous call to <b>curl_setopt</b>)
+ */
 function curl_getinfo(\Purl $ch, $opt = 0) {
-    trigger_error(__FUNCTION__ . PURL_NOT_SUPPORTED_MSG, PURL_ERROR_TYPE);
+    return $ch->getInfo($opt);
 }
+
+//////////////// NOT SUPPORTED FUNCTIONS //////////////////////////////////////
 
 function curl_version ($age = 'CURLVERSION_NOW') {
     trigger_error(__FUNCTION__ . PURL_NOT_SUPPORTED_MSG, PURL_ERROR_TYPE);
