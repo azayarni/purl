@@ -3,7 +3,7 @@
 	"description": "Simple cUrl PHP replacement library for hostings, which are not supporting native cUrl like Google App Engine",
 	"type": "library",
 	"keywords": ["curl", "google app engine", "php"],
-	"homepage": "https://github.com/azayarni/purl",
+	"homepage": "https://github.com/josephbergevin/purl",
 	"require": {
 		"php": ">=5.3.0"
 	}
