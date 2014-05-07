@@ -207,13 +207,13 @@ class Purl
         }
                 
         if ($this->_headers) {
-            foreach ($this->_headers as $name => $value) {
-                $headers .= $name . ': ' . $value . "\r\n";
+            foreach ($this->_headers as $value) {
+                $headers .= $value . "\r\n";
             }
         }
-        
-        if (!isset($this->_headers['Content-type'])) $headers .= "Content-type: " . "application/x-www-form-urlencoded"."\r\n";
-        
+
+        if (!preg_match('/Content-type/', $headers)) $headers .= "Content-type: " . "application/x-www-form-urlencoded"."\r\n";
+
         return $this->_call($query, $this->_info['request_header'] = $headers);
     }
     
