@@ -205,7 +205,12 @@ class Purl
         if (isset($this->_options[CURLOPT_COOKIE])) {
             $this->_headers['Cookie'] = $this->_options[CURLOPT_COOKIE];            
         }
-                
+              
+        // Support basic authentication
+        if (isset($this->_options[CURLOPT_USERPWD])) {
+            $this->_headers['Authorization'] = 'Basic ' . base64_encode($this->_options[CURLOPT_USERPWD]);
+        } 
+        
         if ($this->_headers) {
             foreach ($this->_headers as $name => $value) {
                 $headers .= $name . ': ' . $value . "\r\n";
