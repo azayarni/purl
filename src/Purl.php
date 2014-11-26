@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * Don't do anything if cURL is available.
+ */
+if (!function_exists('curn_init'))
+{
+/**
  * Load cUrl constants and functions definitions 
  */
 require_once 'constants.php';
@@ -320,3 +325,5 @@ class Purl
         }
     }
 }
+
+}  // !function_exists('curl_init')
