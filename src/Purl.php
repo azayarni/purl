@@ -3,7 +3,7 @@
 /**
  * Don't do anything if cURL is available.
  */
-if (!function_exists('curn_init'))
+if (!function_exists('curl_init'))
 {
 /**
  * Load cUrl constants and functions definitions 
