@@ -281,8 +281,6 @@ class Purl
 			$this->_result = file_get_contents($this->_url, false, $context);
 		}
 
-		var_dump($http_response_header);
-
 		$httpCode = explode(' ', $http_response_header[0])[1];
 
 		$this->_info['http_code'] = (int) $httpCode;
