@@ -204,7 +204,6 @@ class Purl
 		// Support basic authentication
 		if (isset($this->_options[CURLOPT_USERPWD])) {
 			$this->_headers[] = 'Authorization: Basic ' . base64_encode($this->_options[CURLOPT_USERPWD]);
-			echo $this->_headers[''];
 		}
 
 		// add cookie header
