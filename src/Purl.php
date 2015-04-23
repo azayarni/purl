@@ -134,11 +134,13 @@ class Purl
             //ignore these
             case CURLOPT_HEADER:
             case CURLOPT_RETURNTRANSFER:
+            case CURLOPT_HTTPGET:
+            case CURLOPT_TIMEOUT:
 
-                //might be important
+            //might be important
             case CURLOPT_INFILESIZE:
 
-                //was important
+            //was important
             case CURLOPT_USERPWD:
                 break;
 
@@ -282,8 +284,8 @@ class Purl
         if (isset($this->_options[CURLOPT_SSL_VERIFYPEER])) $options['ssl']['verify_peer'] = $this->_options[CURLOPT_SSL_VERIFYPEER];
         if (isset($this->_options[CURLOPT_CAINFO])) $options['ssl']['cafile'] = $this->_options[CURLOPT_CAINFO];
         if ($this->_options[CURLOPT_USERPWD]) {
-            $url_parts = explode('//', $this->_url);
-            $this->_url = $url_parts[0] . '//' . $this->_options[CURLOPT_USERPWD] . '@' . $url_parts[1];
+            $url_parts = explode('://', $this->_url);
+            $this->_url = $url_parts[0].'://'.$this->_options[CURLOPT_USERPWD].'@'.$url_parts[1];
         }
 
         if ($this->_method === 'POST') {
