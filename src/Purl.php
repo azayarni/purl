@@ -90,7 +90,8 @@ class Purl
     
     private static $_infoMap = array(
         CURLINFO_HTTP_CODE => 'http_code',
-        CURLINFO_HEADER_OUT => 'request_header'
+        CURLINFO_HEADER_OUT => 'request_header',
+        CURLINFO_EFFECTIVE_URL => 'url'
     );
     
     /**
@@ -114,6 +115,7 @@ class Purl
                 break;
             case CURLOPT_URL:
                 $this->_url = $value;
+                $this->_info['url'] = $value;
                 break;
             case CURLOPT_POST:
                 $this->_method = $value ? 'POST' : $this->_method;
