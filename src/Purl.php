@@ -54,6 +54,11 @@ class Purl
     private $_errorno = '';
 
     /**
+     * Last response code
+     */
+    private $_responseno = null;
+
+    /**
      * URL to call
      *
      * @var string
@@ -137,10 +142,10 @@ class Purl
             case CURLOPT_HTTPGET:
             case CURLOPT_TIMEOUT:
 
-            //might be important
+                //might be important
             case CURLOPT_INFILESIZE:
 
-            //was important
+                //was important
             case CURLOPT_USERPWD:
                 break;
 
@@ -149,6 +154,16 @@ class Purl
         }
 
         return true;
+    }
+
+    /**
+     * Get last response number
+     *
+     * @return int
+     */
+    public function getResponseNumber()
+    {
+        return $this->_responseno;
     }
 
     /**
@@ -283,9 +298,9 @@ class Purl
         // SSL context settings
         if (isset($this->_options[CURLOPT_SSL_VERIFYPEER])) $options['ssl']['verify_peer'] = $this->_options[CURLOPT_SSL_VERIFYPEER];
         if (isset($this->_options[CURLOPT_CAINFO])) $options['ssl']['cafile'] = $this->_options[CURLOPT_CAINFO];
-        if ($this->_options[CURLOPT_USERPWD]) {
+        if (isset($this->_options[CURLOPT_USERPWD]) && $this->_options[CURLOPT_USERPWD]) {
             $url_parts = explode('://', $this->_url);
-            $this->_url = $url_parts[0].'://'.$this->_options[CURLOPT_USERPWD].'@'.$url_parts[1];
+            $this->_url = $url_parts[0] . '://' . $this->_options[CURLOPT_USERPWD] . '@' . $url_parts[1];
         }
 
         if ($this->_method === 'POST') {
@@ -333,6 +348,8 @@ class Purl
         if (!empty($this->_options[CURLOPT_HEADER])) {
             $this->_result = implode($http_response_header, "\r\n") . "\r\n\r\n" . $this->_result;
         }
+
+        $this->_responseno=explode(' ',$http_response_header[0])[1];
 
         return isset($this->_options[CURLOPT_RETURNTRANSFER]) ? $this->_result : true;
     }
