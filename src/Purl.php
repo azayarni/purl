@@ -91,7 +91,8 @@ class Purl
     private static $_infoMap = array(
         CURLINFO_HTTP_CODE => 'http_code',
         CURLINFO_HEADER_OUT => 'request_header',
-        CURLINFO_EFFECTIVE_URL => 'url'
+        CURLINFO_EFFECTIVE_URL => 'url',
+        CURLINFO_CONTENT_TYPE => 'content_type',
     );
     
     /**
@@ -277,7 +278,15 @@ class Purl
         }
         
         $this->_info['http_code'] = explode(' ', $http_response_header[0])[1];
-                
+
+        // response Content Type
+        foreach ($http_response_header as $header) {
+            if (1 === preg_match('/Content\-Type/iu', $header)) {
+                $this->_info['content_type'] = $header;
+                break;
+            }
+        }
+
         error_reporting($reporting);
                 
         // on failure
