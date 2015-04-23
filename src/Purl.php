@@ -130,6 +130,20 @@ class Purl
             case CURLOPT_USERAGENT:
                 $this->_agent = $value;
                 break;
+
+            //ignore these
+            case CURLOPT_HEADER:
+            case CURLOPT_RETURNTRANSFER:
+
+                //might be important
+            case CURLOPT_INFILESIZE:
+
+                //was important
+            case CURLOPT_USERPWD:
+                break;
+
+            default:
+                error_log('Purl choked on option ' . $option);
         }
 
         return true;
@@ -267,6 +281,10 @@ class Purl
         // SSL context settings
         if (isset($this->_options[CURLOPT_SSL_VERIFYPEER])) $options['ssl']['verify_peer'] = $this->_options[CURLOPT_SSL_VERIFYPEER];
         if (isset($this->_options[CURLOPT_CAINFO])) $options['ssl']['cafile'] = $this->_options[CURLOPT_CAINFO];
+        if ($this->_options[CURLOPT_USERPWD]) {
+            $url_parts = explode('//', $this->_url);
+            $this->_url = $url_parts[0] . '//' . $this->_options[CURLOPT_USERPWD] . '@' . $url_parts[1];
+        }
 
         if ($this->_method === 'POST') {
             $options['http']['content'] = $query;
