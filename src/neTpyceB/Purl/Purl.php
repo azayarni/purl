@@ -1,5 +1,7 @@
 <?php
 
+namespace neTpyceB\Purl;
+
 /**
  * Load cUrl constants and functions definitions
  */

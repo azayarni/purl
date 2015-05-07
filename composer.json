@@ -5,5 +5,10 @@
   "keywords": [
     "purl",
     "curl"
-  ]
+  ],
+  "autoload": {
+    "psr-0": {
+      "neTpyceB\\Purl": "src"
+    }
+  }
 }
