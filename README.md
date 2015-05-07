@@ -34,7 +34,7 @@ Using
 ```php
     <?php
         if (!function_exists('curl_init')) {
-            require_once 'path/to/Purl.php';
+            $curl = new neTpyceB\Purl\Purl();
         }
         
         $ch = curl_init('http://www.example.com');
