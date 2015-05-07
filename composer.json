@@ -1,4 +1,9 @@
 {
+  "name": "neTpyceB/purl",
+  "type": "library",
   "description": "Purl is replacement for Curl",
-  "keywords": ["curl"]
+  "keywords": [
+    "purl",
+    "curl"
+  ]
 }
