@@ -1,0 +1,14 @@
+{
+  "name": "devp-eu/purl",
+  "type": "library",
+  "description": "Purl is replacement for Curl",
+  "keywords": [
+    "purl",
+    "curl"
+  ],
+  "autoload": {
+    "psr-0": {
+      "neTpyceB\\Purl": "src"
+    }
+  }
+}
